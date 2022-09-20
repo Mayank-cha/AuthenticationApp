@@ -1,0 +1,19 @@
+# Compiled Python bytecode
+*.py[cod]
+
+# Log files
+*.log
+
+# JetBrains IDE
+.idea/
+
+/venv
+__pycache__
+/config/config.yml
+.vscode
+.idea
+/src/media/*
+/src/logs/*
+.venv
+/src/.venv
+/src/authentication_app/.env

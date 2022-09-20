@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source /opt/authentication_app/venv/bin/activate
+cd /opt/authentication_app/src/
+python manage.py runserver localhost:8000
