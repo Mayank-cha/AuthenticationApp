@@ -57,3 +57,39 @@ class UserViews:
                 return data_not_acceptable(Response.INCORRECT_PASSWORD.value)
 
         return data_not_acceptable(Response.NOT_EXIST.value.format("User"))
+
+    @api_view(['GET'])
+    def get_user(request, user_id):
+        user_object = User.get_by_id(id=user_id)
+        if user_object:
+            user_object = user_object.__dict__
+            del user_object['_state']
+            del user_object['password']
+            del user_object['google_user_id']
+            del user_object['is_verified']
+            return response_success(Response.SUCCESS.value, data=user_object)
+        else:
+            data_not_acceptable(Response.NOT_EXIST.value.format("User"))
+
+    @api_view(['POST'])
+    def update_user(request, user_id):
+        user_object = User.get_by_id(id=user_id)
+        if user_object:
+            name = request.POST.get('name') if request.POST.get('name') else None
+            bio = request.POST.get('bio') if request.POST.get('bio') else None
+            phone = request.POST.get('phone') if request.POST.get('phone') else None
+            email = request.POST.get('email') if request.POST.get('email') else None
+
+            user_object.name = name if name else user_object.name
+            user_object.bio = bio if bio else user_object.bio
+            user_object.phone = phone if phone else user_object.phone
+            user_object.email = email if email else user_object.email
+            user_object.save()
+            user_object = user_object.__dict__
+            del user_object['_state']
+            del user_object['password']
+            del user_object['google_user_id']
+            del user_object['is_verified']
+            return response_success(Response.SUCCESS.value, data=user_object)
+        else:
+            data_not_acceptable(Response.NOT_EXIST.value.format("User"))
