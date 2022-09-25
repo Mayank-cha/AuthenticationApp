@@ -7,20 +7,19 @@ import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import "./app.css";
 
 function App() {
-  const user = false;
+  const user = true;
   return (
     <BrowserRouter>
       <div>
-        <Navbar user={user} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={user ? <Home /> : <Login />} />
           <Route
             path="/home"
             element={user ? <Navigate to="/" /> : <Login />}
           />
           <Route
             path="/login"
-            element={user ? <Navigate to="/" /> : <Login />}
+            element={user ? <Navigate to="/home" /> : <Login />}
           />
         </Routes>
       </div>

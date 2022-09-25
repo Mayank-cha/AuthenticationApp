@@ -10,10 +10,6 @@ function Login() {
 
   return (
     <div className="login-wrap">
-      {/* <div className="nav-bar">
-        <div>Internship</div>
-        <div>Login</div>
-      </div> */}
       <div className="login-html">
         <input id="tab-1" type="radio" name="tab" className="sign-in" checked />
         <label for="tab-1" className="tab">
@@ -32,19 +28,19 @@ function Login() {
               <input id="user" type="text" className="input" />
             </div>
             <div className="group">
-              <label for="pass" className="label">
+              <label for="password" className="label">
                 Password
               </label>
               <input
-                id="pass"
+                id="password"
                 type="password"
                 className="input"
                 data-type="password"
               />
             </div>
-            <div className="group">
+            {/* <div className="group">
               <input id="check" type="checkbox" className="check" checked />
-            </div>
+            </div> */}
             <div className="group">
               <input type="submit" className="button" value="Sign In" />
               <div className="logo-container" onClick={() => google()}>
@@ -60,6 +56,14 @@ function Login() {
               </label>
               <input id="user" type="text" className="input" />
             </div>
+
+            <div className="group">
+              <label for="pass" className="label">
+                Email Address
+              </label>
+              <input id="pass" type="text" className="input" />
+            </div>
+
             <div className="group">
               <label for="pass" className="label">
                 Password
@@ -71,6 +75,7 @@ function Login() {
                 data-type="password"
               />
             </div>
+
             <div className="group">
               <label for="pass" className="label">
                 Repeat Password
@@ -82,12 +87,7 @@ function Login() {
                 data-type="password"
               />
             </div>
-            <div className="group">
-              <label for="pass" className="label">
-                Email Address
-              </label>
-              <input id="pass" type="text" className="input" />
-            </div>
+
             <div className="group">
               <input type="submit" className="button" value="Sign Up" />
             </div>
