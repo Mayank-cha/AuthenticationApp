@@ -17,3 +17,7 @@ __pycache__
 .venv
 /src/.venv
 /src/authentication_app/.env
+
+## frontend and backend node modules 
+node_modules
+node_modules
