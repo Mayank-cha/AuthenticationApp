@@ -75,11 +75,21 @@ class UserViews:
         user_object = User.search_user(email=email, google_user_id=google_user_id)
 
         if user_object and google_user_id:
-            return response_success(Response.LOGIN_SUCCESS.value, {})
+            user_object = user_object.__dict__
+            del user_object['_state']
+            del user_object['password']
+            del user_object['google_user_id']
+            del user_object['is_verified']
+            return response_success(Response.LOGIN_SUCCESS.value, user_object)
 
         if user_object and password:
             if verify_password(plain_text=password, hashed_password=user_object.password):
-                return response_success(Response.LOGIN_SUCCESS.value, {})
+                user_object = user_object.__dict__
+                del user_object['_state']
+                del user_object['password']
+                del user_object['google_user_id']
+                del user_object['is_verified']
+                return response_success(Response.LOGIN_SUCCESS.value, user_object)
             else:
                 return data_not_acceptable(Response.INCORRECT_PASSWORD.value)
 
@@ -140,3 +150,5 @@ class UserViews:
             return response_success(Response.IMAGE_UPDATE_SUCCESS.value, data=user_object)
         else:
             data_not_acceptable(Response.NOT_EXIST.value.format("User"))
+
+
