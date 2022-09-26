@@ -45,7 +45,7 @@ class UserViews:
 
         return response_success(Response.ADD_SUCCESS.value.format("User"), {})
 
-
+    # login method
     @api_view(['POST'])
     def login(request, **kwargs):
         email = request.POST.get('email')
