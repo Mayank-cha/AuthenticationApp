@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 # Create your views here.
-from helpers.constants import Response
+from helpers.constants import Response, DEFAULT_USER_PROFILE_IMAGE
 from helpers.helper import hash_password, verify_password
 from helpers.responses import data_not_acceptable, response_success, custom_response
 from user.models import User
@@ -15,10 +15,25 @@ class UserViews:
         bio = request.data.get('bio')
         phone = request.data.get('phone')
         email = request.data.get('email')
+        image_url = request.data.get('image_url')
         password = request.data.get('password')
         google_user_id = request.data.get('google_user_id')
 
+        if not image_url:
+            image_url = DEFAULT_USER_PROFILE_IMAGE
+
         user_object = User.search_user(email=email, google_user_id=google_user_id)
+
+        if user_object and google_user_id:
+            user_object = user_object.__dict__
+
+            del user_object['_state']
+            del user_object['password']
+            del user_object['google_user_id']
+            del user_object['is_verified']
+            return custom_response(status.HTTP_200_OK, True,
+                                   message=Response.ALREADY_EXIST.value.format("User with given credentials"),
+                                   data=user_object)
 
         if user_object:
             return data_not_acceptable(Response.ALREADY_EXIST.value.format("User with given credentials"))
@@ -29,6 +44,7 @@ class UserViews:
                 bio=bio,
                 phone=phone,
                 email=email,
+                image_url=image_url,
                 google_user_id=google_user_id
             )
             if password:
@@ -102,5 +118,25 @@ class UserViews:
             del user_object['google_user_id']
             del user_object['is_verified']
             return response_success(Response.SUCCESS.value, data=user_object)
+        else:
+            data_not_acceptable(Response.NOT_EXIST.value.format("User"))
+
+    @api_view(['POST'])
+    def update_profile_image(request, user_id):
+        user_object = User.get_by_id(id=user_id)
+        if user_object:
+            image_url = request.data.get('image_url')
+
+            if not image_url:
+                return data_not_acceptable("Please provide an image url.")
+
+            user_object.image_url = image_url
+            user_object.save()
+            user_object = user_object.__dict__
+            del user_object['_state']
+            del user_object['password']
+            del user_object['google_user_id']
+            del user_object['is_verified']
+            return response_success(Response.IMAGE_UPDATE_SUCCESS.value, data=user_object)
         else:
             data_not_acceptable(Response.NOT_EXIST.value.format("User"))

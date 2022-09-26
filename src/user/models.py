@@ -7,6 +7,7 @@ class User(models.Model):
     name = models.CharField(max_length=100)
     bio = models.TextField(null=True)
     phone = models.CharField(max_length=13, null=True)
+    image_url = models.URLField(max_length=300, null=True)
     email = models.EmailField(unique=True, null=False)
     password = models.TextField(null=True) # password null for google auth login
     is_verified = models.BooleanField(null=True, default=False)
