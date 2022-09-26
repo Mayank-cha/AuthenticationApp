@@ -11,12 +11,12 @@ from user.models import User
 class UserViews:
     @api_view(['POST'])
     def signup(request, **kwargs):
-        name = request.POST.get('name')
-        bio = request.POST.get('bio')
-        phone = request.POST.get('phone')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        google_user_id = request.POST.get('google_user_id')
+        name = request.data.get('name')
+        bio = request.data.get('bio')
+        phone = request.data.get('phone')
+        email = request.data.get('email')
+        password = request.data.get('password')
+        google_user_id = request.data.get('google_user_id')
 
         user_object = User.search_user(email=email, google_user_id=google_user_id)
 
@@ -34,7 +34,6 @@ class UserViews:
             if password:
                 user_object.password = hash_password(plain_text=password)
 
-
             user_object.save()
 
             print("user_object")
@@ -48,9 +47,9 @@ class UserViews:
     # login method
     @api_view(['POST'])
     def login(request, **kwargs):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        google_user_id = request.POST.get('google_user_id')
+        email = request.data.get('email')
+        password = request.data.get('password')
+        google_user_id = request.data.get('google_user_id')
 
         user_object = User.search_user(email=email, google_user_id=google_user_id)
 
@@ -82,10 +81,10 @@ class UserViews:
     def update_user(request, user_id):
         user_object = User.get_by_id(id=user_id)
         if user_object:
-            name = request.POST.get('name') if request.POST.get('name') else None
-            bio = request.POST.get('bio') if request.POST.get('bio') else None
-            phone = request.POST.get('phone') if request.POST.get('phone') else None
-            email = request.POST.get('email') if request.POST.get('email') else None
+            name = request.data.get('name') if request.data.get('name') else None
+            bio = request.data.get('bio') if request.data.get('bio') else None
+            phone = request.data.get('phone') if request.data.get('phone') else None
+            email = request.data.get('email') if request.data.get('email') else None
 
             user_object.name = name if name else user_object.name
             user_object.bio = bio if bio else user_object.bio
