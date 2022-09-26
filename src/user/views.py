@@ -36,13 +36,18 @@ class UserViews:
 
             user_object.save()
 
-            print("user_object")
-            print(user_object)
+            user_object = user_object.__dict__
+            del user_object['_state']
+            del user_object['password']
+            del user_object['google_user_id']
+            del user_object['is_verified']
         except Exception as e:
             print(e)
-            return custom_response(status.HTTP_200_OK, False, message=Response.INVALID_INFORMATION.value, data={})
+            return custom_response(status.HTTP_200_OK, False, message=Response.INVALID_INFORMATION.value, data=user_object)
 
-        return response_success(Response.ADD_SUCCESS.value.format("User"), {})
+        if not user_object:
+            user_object = {}
+        return response_success(Response.ADD_SUCCESS.value.format("User"), user_object)
 
     # login method
     @api_view(['POST'])
