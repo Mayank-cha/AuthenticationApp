@@ -33,8 +33,14 @@ class UserViews:
             )
             if password:
                 user_object.password = hash_password(plain_text=password)
+
+
             user_object.save()
+
+            print("user_object")
+            print(user_object)
         except Exception as e:
+            print(e)
             return custom_response(status.HTTP_200_OK, False, message=Response.INVALID_INFORMATION.value, data={})
 
         return response_success(Response.ADD_SUCCESS.value.format("User"), {})
