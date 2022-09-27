@@ -1,4 +1,4 @@
-# AuthenticationApp
+### AuthenticationApp
 
 Python Version: 3.7 or above
 Database: Postgres, version 14.3
