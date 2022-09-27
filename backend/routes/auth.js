@@ -43,6 +43,10 @@ router.get(
   })
 );
 
+router.get("/profile", (req, res) => {
+  res.send(`<h1>Profile Page</h1>`);
+});
+
 router.get(
   "/google/callback",
   passport.authenticate("google", {
@@ -50,5 +54,9 @@ router.get(
     failureRedirect: FAILURE_URL,
   })
 );
+
+// router.get(
+//   "/singup",signup()
+// );
 
 module.exports = router;

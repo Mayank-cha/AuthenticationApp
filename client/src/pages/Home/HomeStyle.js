@@ -7,6 +7,11 @@ width: 100%;
 height: 100%;
 display: flex;
 flex-direction: column;
+input {
+    color: #ffffff;
+    opacity: 1; /* Firefox */
+  }
+  
 }`;
 
 export const HomeContainer = styled.div`
@@ -58,12 +63,22 @@ export const InformationContainer = styled.div`
 
     .button {
       background: #1161ee;
+      text-transform: uppercase;
+      color: #ffffff;
     }
 
     .label {
       color: #aaa;
       font-size: 12px;
       text-transform: uppercase;
+    }
+  }
+  .group-button {
+    display: flex;
+    gap: 20px;
+    .button {
+      border-radius: 5px !important;
+      cursor: pointer;
     }
   }
 `;

@@ -21,3 +21,4 @@ __pycache__
 ## frontend and backend node modules 
 node_modules
 node_modules
+/backend/config/*
